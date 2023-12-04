@@ -12,7 +12,7 @@ const authenticateToken = (req, res, next) => {
     }
 
     
-    if (!process.env.JWT_SECRET) {
+    if (!process.env.JWT_KEY) {
       return res.status(500).json({
         auth: false,
         msg: 'Internal server error: missing secret',

@@ -1,12 +1,12 @@
 const db = require('../models');
 
-// Todos los activos
+// Todos los actives
 const findAll = async (req, res) => { // { nombre: 'nombre' }
   try {
     const users = await db.user.findAll({
-      attributes: { exclude: ['activo'] },
+      attributes: { exclude: ['active'] },
       where: {
-        activo: true
+        active: true
       }
     });
 
@@ -21,7 +21,7 @@ const findById = async (req, res) => { // { nombre: 'nombre' }
     const user = await db.user.findByPk(
       req.params.id,
       {
-        attributes: { exclude: ['activo'] }
+        attributes: { exclude: ['active'] }
       });
     if (user === null) {
       res.status(200).json([]);
@@ -49,7 +49,7 @@ const update = async (req, res) => { // { nombre: 'nombre'}
       where: {
         id: userId
       },
-      exclude: ['activo']
+      exclude: ['active']
     });
     res.status(200).json({ msg: `user ${userId} actualizado` });
   } catch (error) {
@@ -61,7 +61,7 @@ const remove = async (req, res) => {
   try {
     const userId = req.params.id;
     await db.user.update({
-      activo: false
+      active: false
     }, {
       where: {
         id: userId

@@ -73,10 +73,26 @@ const remove = async (req, res) => {
   }
 }
 
+const findChidrenOfUser = async (req, res) => {
+  try {
+    const children = await db.child.findAll({
+      attributes: { exclude: ['active'] },
+      where: {
+        userId: req.params.id
+      }
+    });
+
+    res.status(200).json(children);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
 module.exports = {
   findAll,
   findById,
   create,
   update,
-  remove
+  remove,
+  findChidrenOfUser
 };

@@ -3,14 +3,14 @@ const db = require('../models');
 // Todos los actives
 const findAll = async (req, res) => { // { nombre: 'nombre' }
   try {
-    const users = await db.user.findAll({
+    const games = await db.game.findAll({
       attributes: { exclude: ['active'] },
       where: {
         active: true
       }
     });
 
-    res.status(200).json(users);
+    res.status(200).json(games);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -18,15 +18,15 @@ const findAll = async (req, res) => { // { nombre: 'nombre' }
 
 const findById = async (req, res) => { // { nombre: 'nombre' }
   try {
-    const user = await db.user.findByPk(
+    const game = await db.game.findByPk(
       req.params.id,
       {
         attributes: { exclude: ['active'] }
       });
-    if (user === null) {
+    if (game === null) {
       res.status(200).json([]);
     } else {
-      res.status(200).json(user);
+      res.status(200).json(game);
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -35,8 +35,8 @@ const findById = async (req, res) => { // { nombre: 'nombre' }
 
 const create = async (req, res) => { // { nombre: 'nombre'}
   try {
-    const user = await db.user.create(req.body);
-    res.status(201).json(user);
+    const game = await db.game.create(req.body);
+    res.status(201).json(game);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -44,14 +44,14 @@ const create = async (req, res) => { // { nombre: 'nombre'}
 
 const update = async (req, res) => { // { nombre: 'nombre'}
   try {
-    const userId = req.params.id;
-    await db.user.update(req.body, {
+    const gameId = req.params.id;
+    await db.game.update(req.body, {
       where: {
-        id: userId
+        id: gameId
       },
       exclude: ['active']
     });
-    res.status(200).json({ msg: `user ${userId} actualizado` });
+    res.status(200).json({ msg: `game ${gameId} actualizado` });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -59,15 +59,15 @@ const update = async (req, res) => { // { nombre: 'nombre'}
 
 const remove = async (req, res) => {
   try {
-    const userId = req.params.id;
-    await db.user.update({
+    const gameId = req.params.id;
+    await db.game.update({
       active: false
     }, {
       where: {
-        id: userId
+        id: gameId
       }
     });
-    res.status(200).json({ msg: `user ${userId} actualizado` });
+    res.status(200).json({ msg: `game ${gameId} actualizado` });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

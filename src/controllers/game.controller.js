@@ -76,10 +76,17 @@ const remove = async (req, res) => {
 const findGameActivitiesFromGame = async (req, res) => {
   try {
     const gameActivities = await db.gameActivity.findAll({
-      attributes: { exclude: ['active'] },
+      attributes: { exclude: [] },
       where: {
         gameId: req.params.id,
-      }
+      },
+      include: [
+        {
+          model: db.emotion,
+          as: 'emotion',
+          attributes: ['name']
+        }
+      ]
     });
 
     res.status(200).json(gameActivities);

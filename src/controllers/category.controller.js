@@ -21,7 +21,15 @@ const findById = async (req, res) => { // { nombre: 'nombre' }
     const category = await db.category.findByPk(
       req.params.id,
       {
-        attributes: { exclude: ['active'] }
+        attributes: { exclude: ['active'] },
+        include: [{
+          model: db.game,
+          as: 'games',
+          attributes: ['id', 'name', 'slogan', 'urlImage'],
+          where: {
+            active: true
+          }
+        }]
       });
     if (category === null) {
       res.status(200).json([]);

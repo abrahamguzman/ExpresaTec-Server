@@ -76,7 +76,7 @@ const remove = async (req, res) => {
 const findGameActivitiesFromGame = async (req, res) => {
   try {
     const gameActivities = await db.gameActivity.findAll({
-      attributes: { exclude: [] },
+      attributes: { exclude: ['active'] },
       where: {
         gameId: req.params.id,
       },

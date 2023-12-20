@@ -7,7 +7,12 @@ const findAll = async (req, res) => { // { nombre: 'nombre' }
       attributes: { exclude: ['active'] },
       where: {
         active: true
-      }
+      },
+      include: [{
+        model: db.category,
+        as: 'category',
+        attributes: ['scenery']
+      }]
     });
 
     res.status(200).json(games);
@@ -21,7 +26,12 @@ const findById = async (req, res) => { // { nombre: 'nombre' }
     const game = await db.game.findByPk(
       req.params.id,
       {
-        attributes: { exclude: ['active'] }
+        attributes: { exclude: ['active'] },
+        include: [{
+          model: db.category,
+          as: 'category',
+          attributes: ['scenery']
+        }]
       });
     if (game === null) {
       res.status(200).json([]);

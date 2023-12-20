@@ -9,4 +9,6 @@ router.post("/", game.create);
 router.put("/:id", game.update);
 router.delete("/:id", game.remove);
 
+router.get("/:id/gameActivities", game.findGameActivitiesFromGame);
+
 module.exports = router;

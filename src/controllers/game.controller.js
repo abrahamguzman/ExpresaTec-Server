@@ -73,10 +73,26 @@ const remove = async (req, res) => {
   }
 }
 
+const findGameActivitiesFromGame = async (req, res) => {
+  try {
+    const gameActivities = await db.gameActivity.findAll({
+      attributes: { exclude: ['active'] },
+      where: {
+        gameId: req.params.id,
+      }
+    });
+
+    res.status(200).json(gameActivities);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+}
+
 module.exports = {
   findAll,
   findById,
   create,
   update,
-  remove
+  remove,
+  findGameActivitiesFromGame
 };

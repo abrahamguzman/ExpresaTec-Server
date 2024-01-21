@@ -8,15 +8,14 @@ const { statusDbConnection, syncDb } = require("./src/utils/db.utils.js");
 
 const app = express();
 
-app.use(express.json());
 app.use(cors());
+app.use(express.json());
 statusDbConnection(db); // Check the connection to the database
 syncDb(db); // Synchronize the database
 
 app.get("/", (req, res) => {
   res.send("!Greetings from the Expresatec server!");
 });
-
 
 app.use("/api/v1/auth", require("./src/routes/auth.js"));
 app.use(authMiddleware);
